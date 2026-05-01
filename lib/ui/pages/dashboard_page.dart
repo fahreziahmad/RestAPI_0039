@@ -48,9 +48,62 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
+            BlocListener<HewanBloc, HewanState>(
+  listener: (context, state) {
+    if (state is HewanCreatedSuccess) {
+      _showSnackBar(context, "Operasi Berhasil!", Colors.green);
+    } else if (state is HewanError) {
+      _showSnackBar(context, state.message, Colors.red);
+    }
+  },
+  child: BlocBuilder<HewanBloc, HewanState>(
+    builder: (context, state) {
+      if (state is HewanLoading) {
+        return Center(
+          child: Lottie.asset('assets/loading.json', width: 200),
+        );
+      } else if (state is HewanLoaded) {
+        if (state.hewanList.isEmpty) {
+          return const Center(
+            child: Text(
+              "Belum ada koleksi.",
+              style: TextStyle(color: Colors.white70),
+            ),
+          );
+        }
+
+        return CustomRefreshIndicator(
+          onRefresh: () async {
+            context.read<HewanBloc>().add(FetchHewan());
+            await Future.delayed(const Duration(seconds: 2));
+          },
+          builder: (context, child, controller) {
+            return AnimatedBuilder(
+              animation: controller,
+              builder: (context, _) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    if (!controller.isIdle)
+                      Positioned(
+                        top: 50 * controller.value,
+                        child: Lottie.asset(
+                          'assets/loading.json',
+                          height: 80,
+                        ),
+                      ),
+                    Transform.translate(
+                      offset: Offset(0, 100.0 * controller.value),
+                      child: child,
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      }
+      return const SizedBox();
+    
   }
 }
