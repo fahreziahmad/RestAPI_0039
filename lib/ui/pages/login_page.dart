@@ -78,5 +78,78 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                Center(
+  child: SingleChildScrollView(
+    padding: const EdgeInsets.symmetric(horizontal: 30),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.2),
+              width: 1.5,
+            ),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Selamat Datang",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 40),
+
+                _buildGlassTextField(
+                  controller: _emailController,
+                  hint: "Email",
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Email tidak boleh kosong';
+                    if (!_isValidEmail(value))
+                      return 'Format email salah';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                _buildGlassTextField(
+                  controller: _passwordController,
+                  hint: "Password",
+                  icon: Icons.lock_outline,
+                  isPassword: _isObscure,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.white38,
+                    ),
+                    onPressed: () => setState(
+                      () => _isObscure = !_isObscure,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Password wajib diisi';
+                    if (value.length < 6)
+                      return 'Minimal 6 karakter';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 40),
+
                 
               
