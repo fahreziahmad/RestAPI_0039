@@ -30,3 +30,39 @@ class AuthRepository {
         },
         body: jsonEncode({'email': email, 'password': password}),
       );
+
+      final data = jsonDecode(response.body);
+      developer.log('Response Login: ${response.body}', name: 'API');
+
+      if (response.statusCode == 200) {
+        await persistToken(data['token']);
+        return UserModel.fromJson(data['user']);
+      } else {
+        throw data['message'] ?? 'Gagal Login';
+      }
+    } catch (e) {
+      developer.log('Error pada Login: $e', name: 'API');
+      rethrow;
+    }
+  }
+
+  Future<void> register(String username, String email, String password) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/register'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: jsonEncode({
+        'username': username,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode != 201 && response.statusCode != 200) {
+      final data = jsonDecode(response.body);
+      throw data['message'] ?? 'Gagal Register';
+    }
+  }
+}
