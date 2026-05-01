@@ -36,3 +36,14 @@ class HewanBloc extends Bloc<HewanEvent, HewanState> {
         emit(HewanError(e.toString()));
       }
     });
+    on<DeleteHewan>((event, emit) async {
+      try {
+        await repository.deleteHewan(event.id);
+        emit(HewanCreatedSuccess());
+        add(FetchHewan());
+      } catch (e) {
+        emit(HewanError(e.toString()));
+      }
+    });
+  }
+}
