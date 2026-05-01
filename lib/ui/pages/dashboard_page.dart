@@ -192,5 +192,38 @@ floatingActionButton: Builder(
   );
 }
     
-  }
+void _showDeleteDialog(BuildContext context, dynamic hewan) {
+  showDialog(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      backgroundColor: Colors.indigo.shade900,
+      title: const Text("Hapus Data?", style: TextStyle(color: Colors.white)),
+      content: Text(
+        "Yakin ingin menghapus ${hewan.nama}?",
+        style: const TextStyle(color: Colors.white70),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(dialogContext),
+          child: const Text("Batal"),
+        ),
+        TextButton(
+          onPressed: () {
+            context.read<HewanBloc>().add(DeleteHewan(hewan.id));
+            Navigator.pop(dialogContext);
+          },
+          child: const Text(
+            "Hapus",
+            style: TextStyle(color: Colors.redAccent),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+void _showSnackBar(BuildContext context, String msg, Color color) {
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(msg), backgroundColor: color));
 }
