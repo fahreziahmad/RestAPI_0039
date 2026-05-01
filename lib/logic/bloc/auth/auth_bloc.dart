@@ -38,3 +38,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         developer.log('❌ Status: AuthError - $e', name: 'AuthBloc');
       }
     });
+    on<RegisterRequested>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        await repository.register(event.name, event.email, event.password);
+        emit(Unauthenticated());
+        developer.log('✅ Register Success', name: 'AuthBloc');
+      } catch (e) {
+        emit(AuthError(e.toString()));
+        developer.log('❌ Register Error: $e', name: 'AuthBloc');
+      }
+    });
+
+    on<LogoutRequested>((event, emit) async {
+      await repository.deleteToken();
+      emit(Unauthenticated());
+      developer.log('🚪 Logged Out', name: 'AuthBloc');
+    });
+  }
+}
