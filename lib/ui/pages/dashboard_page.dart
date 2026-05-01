@@ -103,7 +103,43 @@ class DashboardPage extends StatelessWidget {
           },
         );
       }
-      return const SizedBox();
+     child: ListView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 100, 16, 100),
+              itemCount: state.hewanList.length,
+              itemBuilder: (context, index) {
+                final hewan = state.hewanList[index];
+                return _buildGlassCard(context, hewan);
+              },
+            ),
+          );
+        }
+        return const Center(child: Text("Gagal memuat data."));
+      },
+    ),
+  ],
+),
+floatingActionButton: Builder(
+  builder: (context) => FloatingActionButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (innerContext) => BlocProvider.value(
+            value: context
+                .read<
+                    HewanBloc
+                >(),
+            child: const AddHewanPage(),
+          ),
+        ),
+      );
+    },
+    backgroundColor: Colors.white.withOpacity(0.2),
+    child: const Icon(Icons.add, color: Colors.white),
+  ),
+),
+);
+}
     
   }
 }
