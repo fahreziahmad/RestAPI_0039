@@ -75,5 +75,91 @@ class _RegisterPageState extends State<RegisterPage> {
               colors: [Color(0xFF1A237E), Color(0xFFFAD1457)],
             ),
           ),
-          
+          child: Center(
+  child: SingleChildScrollView(
+    padding: const EdgeInsets.symmetric(horizontal: 30),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.2),
+              width: 1.5,
+            ),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Buat Akun",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 30),
+
+                _buildGlassTextField(
+                  controller: _nameController,
+                  hint: "Nama Lengkap",
+                  icon: Icons.person_outline,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Nama tidak boleh kosong';
+                    if (value.length < 3)
+                      return 'Nama minimal 3 karakter';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                _buildGlassTextField(
+                  controller: _emailController,
+                  hint: "Email",
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Email wajib diisi';
+                    if (!_isValidEmail(value))
+                      return 'Format email tidak valid';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                _buildGlassTextField(
+                  controller: _passwordController,
+                  hint: "Password",
+                  icon: Icons.lock_outline,
+                  isPassword: _obscureText,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.white70,
+                    ),
+                    onPressed: () => setState(
+                      () => _obscureText = !_obscureText,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Password tidak boleh kosong';
+                    if (value.length < 6)
+                      return 'Password minimal 6 karakter';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 30),
+
   
