@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restapi/logic/bloc/hewan/hewan_event.dart';
-import 'package:restapi/logic/bloc/hewan/hewan_state.dart';
+import 'package:restapi_0039/logic/bloc/hewan/hewan_event.dart';
+import 'package:restapi_0039/logic/bloc/hewan/hewan_state.dart';
 import '../../../data/repositories/hewan_repository.dart';
 
 class HewanBloc extends Bloc<HewanEvent, HewanState> {

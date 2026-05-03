@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restapi/logic/bloc/auth/auth_event.dart';
-import 'package:restapi/logic/bloc/auth/auth_state.dart';
+import 'package:restapi_0039/logic/bloc/auth/auth_event.dart';
+import 'package:restapi_0039/logic/bloc/auth/auth_state.dart';
 import '../../logic/bloc/auth/auth_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,11 +14,9 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
   bool _obscureText = true;
 
   @override
@@ -72,194 +70,172 @@ class _RegisterPageState extends State<RegisterPage> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xFF1A237E), Color(0xFFFAD1457)],
+              colors: [Color(0xFF1A237E), Color(0xFFAD1457)],
             ),
           ),
           child: Center(
-  child: SingleChildScrollView(
-    padding: const EdgeInsets.symmetric(horizontal: 30),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(25),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(25),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.2),
-              width: 1.5,
-            ),
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Buat Akun",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 30),
-
-                _buildGlassTextField(
-                  controller: _nameController,
-                  hint: "Nama Lengkap",
-                  icon: Icons.person_outline,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Nama tidak boleh kosong';
-                    if (value.length < 3)
-                      return 'Nama minimal 3 karakter';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                _buildGlassTextField(
-                  controller: _emailController,
-                  hint: "Email",
-                  icon: Icons.email_outlined,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Email wajib diisi';
-                    if (!_isValidEmail(value))
-                      return 'Format email tidak valid';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                _buildGlassTextField(
-                  controller: _passwordController,
-                  hint: "Password",
-                  icon: Icons.lock_outline,
-                  isPassword: _obscureText,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      color: Colors.white70,
-                    ),
-                    onPressed: () => setState(
-                      () => _obscureText = !_obscureText,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'Password tidak boleh kosong';
-                    if (value.length < 6)
-                      return 'Password minimal 6 karakter';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 30),
-
-                BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) {
-                    if (state is AuthLoading) {
-                      return const CircularProgressIndicator(
-                        color: Colors.white,
-                      );
-                    }
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<AuthBloc>().add(
-                                  RegisterRequested(
-                                    _nameController.text,
-                                    _emailController.text,
-                                    _passwordController.text,
-                                  ),
-                                );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          elevation: 5,
-                        ),
-                        child: const Text(
-                          "Daftar Sekarang",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        width: 1.5,
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text(
-                    "Sudah punya akun? Login",
-                    style: TextStyle(color: Colors.white70),
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Buat Akun",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          _buildGlassTextField(
+                            controller: _nameController,
+                            hint: "Nama Lengkap",
+                            icon: Icons.person_outline,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Nama tidak boleh kosong';
+                              if (value.length < 3) return 'Nama minimal 3 karakter';
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          _buildGlassTextField(
+                            controller: _emailController,
+                            hint: "Email",
+                            icon: Icons.email_outlined,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Email wajib diisi';
+                              if (!_isValidEmail(value)) return 'Format email tidak valid';
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          _buildGlassTextField(
+                            controller: _passwordController,
+                            hint: "Password",
+                            icon: Icons.lock_outline,
+                            isPassword: _obscureText,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText ? Icons.visibility_off : Icons.visibility,
+                                color: Colors.white70,
+                              ),
+                              onPressed: () => setState(() => _obscureText = !_obscureText),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return 'Password tidak boleh kosong';
+                              if (value.length < 6) return 'Password minimal 6 karakter';
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 30),
+                          BlocBuilder<AuthBloc, AuthState>(
+                            builder: (context, state) {
+                              if (state is AuthLoading) {
+                                return const CircularProgressIndicator(color: Colors.white);
+                              }
+                              return SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.read<AuthBloc>().add(
+                                            RegisterRequested(
+                                              _nameController.text,
+                                              _emailController.text,
+                                              _passwordController.text,
+                                            ),
+                                          );
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.redAccent.shade400,
+                                    padding: const EdgeInsets.symmetric(vertical: 15),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    elevation: 5,
+                                  ),
+                                  child: const Text(
+                                    "Daftar Sekarang",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text(
+                              "Sudah punya akun? Login",
+                              style: TextStyle(color: Colors.white70),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-),
+    );
+  }
 
-Widget _buildGlassTextField({
-  required TextEditingController controller,
-  required String hint,
-  required IconData icon,
-  bool isPassword = false,
-  Widget? suffixIcon,
-  TextInputType? keyboardType,
-  String? Function(String?)? validator,
-}) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.white.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: TextFormField(
-      controller: controller,
-      obscureText: isPassword,
-      keyboardType: keyboardType,
-      validator: validator,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white60),
-        prefixIcon: Icon(icon, color: Colors.white70),
-        suffixIcon: suffixIcon,
-        border: InputBorder.none,
-        errorStyle: const TextStyle(
-          color: Colors.yellowAccent,
-          fontWeight: FontWeight.bold,
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 20,
+  Widget _buildGlassTextField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    bool isPassword = false,
+    Widget? suffixIcon,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: isPassword,
+        keyboardType: keyboardType,
+        validator: validator,
+        style: const TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: const TextStyle(color: Colors.white60),
+          prefixIcon: Icon(icon, color: Colors.white70),
+          suffixIcon: suffixIcon,
+          border: InputBorder.none,
+          errorStyle: const TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold),
+          contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
-
-
-  

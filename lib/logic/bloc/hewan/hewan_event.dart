@@ -21,3 +21,12 @@ class DeleteHewan extends HewanEvent {
   @override
   List<Object> get props => [id];
 }
+
+class UpdateHewan extends HewanEvent {
+  final int id;
+  final Map<String, dynamic> data;
+  UpdateHewan(this.id, this.data);
+
+  @override
+  List<Object> get props => [id, data];
+}

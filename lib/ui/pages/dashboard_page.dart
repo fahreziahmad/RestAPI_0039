@@ -93,7 +93,7 @@ class DashboardPage extends StatelessWidget {
                               children: [
                                 if (!controller.isIdle)
                                   Positioned(
-                                    top: 50 * controller.value,
+                                    top: 50 * controller.value.toDouble(),
                                     child: Lottie.asset(
                                       'assets/loading.json',
                                       height: 80,
@@ -142,7 +142,7 @@ class DashboardPage extends StatelessWidget {
                 ),
               );
             },
-            backgroundColor: Colors.white.withOpacity(0.2),
+            backgroundColor: Colors.white.withValues(alpha: 0.2),
             child: const Icon(Icons.add, color: Colors.white),
           ),
         ),
@@ -160,9 +160,9 @@ class DashboardPage extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
             ),
             child: ListTile(
               onTap: () {
@@ -178,7 +178,7 @@ class DashboardPage extends StatelessWidget {
                 );
               },
               leading: CircleAvatar(
-                backgroundColor: Colors.white.withOpacity(0.2),
+                backgroundColor: Colors.white.withValues(alpha: 0.2),
                 child: const Icon(Icons.pets, color: Colors.white),
               ),
               title: Text(

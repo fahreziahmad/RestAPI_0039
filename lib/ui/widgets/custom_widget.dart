@@ -40,8 +40,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         boxShadow: [
           BoxShadow(
             color: _isFocused
-                ? Color(0xFF8b5cf6).withOpacity(0.3)
-                : Colors.black.withOpacity(0.08),
+                ? Color(0xFF8b5cf6).withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.08),
             blurRadius: _isFocused ? 16 : 8,
             offset: _isFocused ? Offset(0, 6) : Offset(0, 4),
           ),

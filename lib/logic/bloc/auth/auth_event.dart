@@ -16,12 +16,4 @@ class RegisterRequested extends AuthEvent {
   RegisterRequested(this.name, this.email, this.password);
 }
 
-class LogoutRequested extends AuthEvent {}
-class UpdateHewan extends HewanEvent {
-  final int id;
-  final Map<String, dynamic> data;
-  UpdateHewan(this.id, this.data);
-
-  @override
-  List<Object> get props => [id, data];
-}
+class LogoutRequested extends AuthEvent {}

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:restapi/data/models/hewan_model.dart';
+import 'package:restapi_0039/data/models/hewan_model.dart';
 
 abstract class HewanState extends Equatable {
   @override

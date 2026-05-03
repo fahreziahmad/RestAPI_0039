@@ -60,9 +60,11 @@ class AuthRepository {
       }),
     );
 
+    developer.log('Response Register: ${response.statusCode} - ${response.body}', name: 'API');
+
     if (response.statusCode != 201 && response.statusCode != 200) {
       final data = jsonDecode(response.body);
-      throw data['message'] ?? 'Gagal Register';
+      throw data['message'] ?? data['error'] ?? 'Gagal Register';
     }
   }
 }
